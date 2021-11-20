@@ -5,22 +5,25 @@ import {useMarvelService} from '../../services/MarvelService'
 import { Spinner } from '../spinner/Spinner'
 import { ErrorMessage } from '../errorMessage/errorMessage'
 import { AppBanner } from "../appBanner/AppBanner";
+import { setContent } from '../../utils/setContent'
 
 export const SingleItemPage = ({Component, data}) => {
     const {id} = useParams()
     console.log(id)
     const [item, setItem] = useState([])
-    const {loading, error, getCharacter, getComic, clearError} = useMarvelService()
+    const {getCharacter, getComic, clearError, process, setProcess} = useMarvelService()
     const itemLoad = (id) => {
         clearError()
         switch(data) {
             case 'char' :
                 getCharacter(id)
                 .then(char => setItem(char))
+                .then(() => setProcess('confirmed'))
                 break;
             case 'comic' :
                 getComic(id)
                 .then(comic => setItem(comic))
+                .then(() => setProcess('confirmed'))
                     break;
             default : return   
         }
@@ -30,15 +33,10 @@ export const SingleItemPage = ({Component, data}) => {
     useEffect(() => {
         itemLoad(id)
     }, [])
-    const spinner = loading ? <Spinner/> : null
-    const content = !(loading || error) ? <Component item={item}/> : null
-    const errorMessage = error ? <ErrorMessage/> : null
     return (
         <div>
             <AppBanner/>
-            {spinner}
-            {content}
-            {errorMessage}
+            {setContent(process, Component, item)}
         </div>
         
     )

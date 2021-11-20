@@ -4,9 +4,9 @@ import {Helmet} from "react-helmet";
 import './singleComicPage.scss'
 
 
-export const SingleComicPage = ({item}) => {
+export const SingleComicPage = ({data}) => {
     
-    const {title, description, pages, price, language, thumbnail} = item
+    const {title, description, pages, price, language, thumbnail} = data
     return (
         <>
          <Helmet>

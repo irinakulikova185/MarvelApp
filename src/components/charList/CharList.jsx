@@ -1,15 +1,31 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import {useMarvelService} from '../../services/MarvelService'
 import { Spinner } from '../spinner/Spinner'
 import { ErrorMessage } from '../errorMessage/errorMessage'
 
+
 import './charList.scss'
+
+const setContent = (process, Component, newCharsLoading) => {
+    switch(process) {
+        case 'loading': 
+            return !newCharsLoading ? <Spinner/> : <Component/>
+        case 'waiting': 
+            return <Spinner/>;
+        case 'confirmed':
+            return <Component/> 
+        case 'error':
+            return <ErrorMessage/>     
+        default:
+            throw new Error('Unexcected process type')    
+    }
+}
 
 export const CharList = (props) => {
 
-    const {loading, error, getAllCharacters} = useMarvelService()
+    const {getAllCharacters, process, setProcess} = useMarvelService()
     const [charList, setCharList] = useState([])
     const [offset, setOffset] = useState(210)
     const [newCharsLoading, setNewCharsLoading] = useState(false)
@@ -29,6 +45,7 @@ export const CharList = (props) => {
         initial ? setNewCharsLoading(false) : setNewCharsLoading(true)
         getAllCharacters(offset)
             .then(newChars => updateCharlist(newChars))
+            .then(() => setProcess('confirmed'))
      }
      useEffect(() => {
          onRequest(offset, true)
@@ -65,15 +82,15 @@ export const CharList = (props) => {
         </ul>
        )
      }
-
-    const items = renderItems(charList)
-    const spinner = loading && !newCharsLoading ? <Spinner/> : null
-    const errorMessage = error ? <ErrorMessage/> : null
+    const elements = useMemo(() => {
+        return setContent(process, () => renderItems(charList), newCharsLoading)
+    },[process])
+    // const items = renderItems(charList)
+    // const spinner = loading && !newCharsLoading ? <Spinner/> : null
+    // const errorMessage = error ? <ErrorMessage/> : null
     return (
         <div className="char__list">
-            {spinner}
-            {errorMessage}
-            {items}
+            {elements}
             <button 
                 className="button button__main button__long"
                 onClick={() => onRequest(offset)}

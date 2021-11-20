@@ -5,7 +5,7 @@ export const useMarvelService = () => {
     const _apiBase = 'https://gateway.marvel.com:443/v1/public/'
     const  _baseOffset = 210
   
-    const {request, loading, error, clearError} = useHttp()
+    const {request, clearError, process, setProcess} = useHttp()
 
 
     const getAllCharacters = async (offset = _baseOffset) => {
@@ -36,8 +36,8 @@ export const useMarvelService = () => {
             name: char.name,
             description: char.description ? char.description.slice(0, 180) + '...' : 'There is no description:(',
             thumbnail: char.thumbnail.path + '.' +char.thumbnail.extension,
-            homepage: char.urls[0],
-            wiki: char.urls[1],
+            homepage: char.urls[0].url,
+            wiki: char.urls[1].url,
             id: char.id,
             comics: char.comics.items.slice(0, 10)
         }
@@ -55,5 +55,14 @@ export const useMarvelService = () => {
         }
     }
 
-    return {loading, error, getAllCharacters, getCharacter, clearError, getAllComics, getComic, getCharacterByName}
+    return { 
+            process, 
+            setProcess, 
+            getAllCharacters, 
+            getCharacter, 
+            clearError, 
+            getAllComics, 
+            getComic, 
+            getCharacterByName
+        }
 }
