@@ -3,7 +3,7 @@ import {Helmet} from "react-helmet";
 import './singleCharPage.scss'
 
 
-export const SingleCharPage = ({data}) => {
+const SingleCharPage = ({data}) => {
     
     const {name, description, thumbnail} = data
     return (
@@ -23,3 +23,5 @@ export const SingleCharPage = ({data}) => {
         </div>
     )
 }
+
+export default SingleCharPage

@@ -2,12 +2,10 @@ import { useParams} from "react-router-dom";
 import { useState, useEffect } from 'react'
 
 import {useMarvelService} from '../../services/MarvelService'
-import { Spinner } from '../spinner/Spinner'
-import { ErrorMessage } from '../errorMessage/errorMessage'
 import { AppBanner } from "../appBanner/AppBanner";
 import { setContent } from '../../utils/setContent'
 
-export const SingleItemPage = ({Component, data}) => {
+const SingleItemPage = ({Component, data}) => {
     const {id} = useParams()
     console.log(id)
     const [item, setItem] = useState([])
@@ -41,4 +39,6 @@ export const SingleItemPage = ({Component, data}) => {
         
     )
 }
+
+export default SingleItemPage
 

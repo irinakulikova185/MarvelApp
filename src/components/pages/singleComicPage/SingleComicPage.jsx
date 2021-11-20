@@ -4,7 +4,7 @@ import {Helmet} from "react-helmet";
 import './singleComicPage.scss'
 
 
-export const SingleComicPage = ({data}) => {
+const SingleComicPage = ({data}) => {
     
     const {title, description, pages, price, language, thumbnail} = data
     return (
@@ -30,4 +30,4 @@ export const SingleComicPage = ({data}) => {
         </>
     )
 }
-
+export default SingleComicPage

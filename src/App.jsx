@@ -4,12 +4,16 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.scss';
 import './styles/_variables.scss'
 
-import {MainPage, Page404, SingleComicPage} from './components/pages'  
+import MainPage from './components/pages/MainPage'  
 import {AppHeader} from './components/appHeader/AppHeader'
-import { SingleCharPage } from './components/pages/singleCharPage/SingleCharPage';
-import { SingleItemPage } from './components/pages/SingleItemPage';
 
 const ComicsPage = lazy(() => import('./components/pages/ComicsPage'))
+const SingleItemPage = lazy(() => import('./components/pages/SingleItemPage'))
+const SingleCharPage = lazy(() => import('./components/pages/singleCharPage/SingleCharPage'))
+const SingleComicPage = lazy(() => import('./components/pages/singleComicPage/SingleComicPage'))
+const Page404 = lazy(() => import('./components/pages/404'))
+
+
 
 
 const App = () => {

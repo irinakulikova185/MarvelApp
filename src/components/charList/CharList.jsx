@@ -85,9 +85,6 @@ export const CharList = (props) => {
     const elements = useMemo(() => {
         return setContent(process, () => renderItems(charList), newCharsLoading)
     },[process])
-    // const items = renderItems(charList)
-    // const spinner = loading && !newCharsLoading ? <Spinner/> : null
-    // const errorMessage = error ? <ErrorMessage/> : null
     return (
         <div className="char__list">
             {elements}
